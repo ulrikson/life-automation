@@ -30,9 +30,9 @@ class Weather:
             forecasts.append(
                 {
                     "date": date,
-                    "avg_temp": avg_temp,
-                    "min_temp": min_temp,
-                    "max_temp": max_temp,
+                    "avg_temp": int(avg_temp),
+                    "min_temp": int(min_temp),
+                    "max_temp": int(max_temp),
                     "text": condition,
                 }
             )
@@ -44,7 +44,7 @@ class Weather:
         for example: * 2021-03-01: Partly cloudy, 3°C (1°C - 5°C)"""
 
         forecasts = self.getForecast()
-        forecast_text = "## Weather forecast\n"
+        forecast_text = "Weather forecast 🌦\n"
         for forecast in forecasts:
             forecast_text += f"* {forecast['date']}: {forecast['text']}, {forecast['avg_temp']}°C ({forecast['min_temp']}°C - {forecast['max_temp']}°C)\n"
         return forecast_text
