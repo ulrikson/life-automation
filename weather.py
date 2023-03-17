@@ -6,12 +6,16 @@ load_dotenv()
 
 
 class Weather:
+    """Using the Weather API from https://www.weatherapi.com/"""
+
     def __init__(self):
         self.url = "http://api.weatherapi.com/v1/forecast.json"
         self.city = "Stockholm"
         self.params = {"key": os.getenv("WEATHER_API_KEY"), "q": self.city, "days": 3}
 
     def getForecast(self):
+        """Returns a list of dictionaries with the forecast for the next 3 days"""
+
         response = requests.get(self.url, headers={}, params=self.params).json()
 
         forecasts = []
@@ -36,6 +40,9 @@ class Weather:
         return forecasts
 
     def getForecastText(self):
+        """Returns a string with the forecast for the next 3 days in markdown format
+        for example: * 2021-03-01: Partly cloudy, 3°C (1°C - 5°C)"""
+
         forecasts = self.getForecast()
         forecast_text = "## Weather forecast\n"
         for forecast in forecasts:

@@ -53,6 +53,7 @@ class Todoist:
 
     def get_headers(self):
         """Get headers for Todoist API"""
+        
         return {
             "Content-Type": "application/json",
             "X-Request-Id": str(uuid.uuid4()),
