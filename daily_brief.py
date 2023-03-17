@@ -8,17 +8,18 @@ class DailyBrief:
         pass
 
     def create_brief(self):
+        todoist = Todoist()
         weather = Weather().getForecastText()
         news = News().getPopularTopics()
         text = f"{news}\n{weather}"
 
-        Todoist().create_task(
+        todoist.create_task(
             {
                 "content": "Daily brief",
                 "due_string": "today",
                 "priority": 2,
                 "description": text,
-                "project_id": "",  # empty string for inbox
+                "project_id": todoist.inbox_project_id,  # empty string for inbox
             }
         )
 
