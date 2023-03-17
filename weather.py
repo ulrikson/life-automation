@@ -44,7 +44,7 @@ class Weather:
         for example: * 2021-03-01: Partly cloudy, 3°C (1°C - 5°C)"""
 
         forecasts = self.getForecast()
-        forecast_text = "Weather forecast 🌦\n"
+        text = "Weather forecast 🌦\n"
         for forecast in forecasts:
-            forecast_text += f"* {forecast['date']}: {forecast['text']}, {forecast['avg_temp']}°C ({forecast['min_temp']}°C - {forecast['max_temp']}°C)\n"
-        return forecast_text
+            text += f"* {forecast['date']}: {forecast['text']}, {forecast['avg_temp']}°C ({forecast['min_temp']}°C - {forecast['max_temp']}°C)\n"
+        return text
