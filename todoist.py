@@ -10,6 +10,7 @@ load_dotenv()
 class Todoist:
     def __init__(self) -> None:
         self.inbox_project_id = 2309764563
+        self.headers = self.get_headers()
 
     def get_tasks(self, params):
         """Get tasks from Todoist API
@@ -18,9 +19,8 @@ class Todoist:
         :return: json
         """
         url = "https://api.todoist.com/rest/v2/tasks"
-        headers = {"Authorization": f"Bearer {os.getenv('TODOIST_TOKEN')}"}
 
-        response = requests.get(url, headers=headers, params=params)
+        response = requests.get(url, headers=self.headers, params=params)
 
         return response.json()
 
@@ -32,13 +32,8 @@ class Todoist:
         """
 
         url = "https://api.todoist.com/rest/v2/tasks"
-        headers = {
-            "Content-Type": "application/json",
-            "X-Request-Id": str(uuid.uuid4()),
-            "Authorization": f"Bearer {os.getenv('TODOIST_TOKEN')}",
-        }
 
-        response = requests.post(url, data=json.dumps(data), headers=headers)
+        response = requests.post(url, data=json.dumps(data), headers=self.headers)
 
         return True if response.status_code == 200 else False
 
@@ -51,13 +46,15 @@ class Todoist:
         """
 
         url = "https://api.todoist.com/rest/v2/tasks/" + str(task_id)
-        headers = {
+
+        response = requests.post(url, data=json.dumps(data), headers=self.headers)
+
+        return True if response.status_code == 200 else False
+
+    def get_headers(self):
+        """Get headers for Todoist API"""
+        return {
             "Content-Type": "application/json",
             "X-Request-Id": str(uuid.uuid4()),
             "Authorization": f"Bearer {os.getenv('TODOIST_TOKEN')}",
         }
-
-        response = requests.post(url, data=json.dumps(data), headers=headers)
-
-        return True if response.status_code == 200 else False
-
