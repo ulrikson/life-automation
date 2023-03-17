@@ -39,4 +39,24 @@ def create_task(data):
 
     response = requests.post(url, data=json.dumps(data), headers=headers)
 
-    return True
+    return True if response.status_code == 200 else False
+
+
+def update_task(data, task_id):
+    """Update task in Todoist API
+    See https://developer.todoist.com/rest/v2/#update-a-task
+    :param data: dict
+    :param task_id: int
+    :return: bool
+    """
+
+    url = "https://api.todoist.com/rest/v2/tasks/" + str(task_id)
+    headers = {
+        "Content-Type": "application/json",
+        "X-Request-Id": str(uuid.uuid4()),
+        "Authorization": f"Bearer {os.getenv('TODOIST_TOKEN')}",
+    }
+
+    response = requests.post(url, data=json.dumps(data), headers=headers)
+
+    return True if response.status_code == 200 else False
