@@ -37,7 +37,7 @@ class Weather:
 
     def getForecastText(self):
         forecasts = self.getForecast()
-        forecast_text = ""
+        forecast_text = "## Weather forecast\n"
         for forecast in forecasts:
-            forecast_text += f"{forecast['date']}: {forecast['text']}, {forecast['avg_temp']}°C, {forecast['min_temp']}°C - {forecast['max_temp']}°C\n"
+            forecast_text += f"* {forecast['date']}: {forecast['text']}, {forecast['avg_temp']}°C ({forecast['min_temp']}°C - {forecast['max_temp']}°C)\n"
         return forecast_text
