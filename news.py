@@ -20,7 +20,7 @@ class News:
     def getTopicsText(self, topics):
         """Converts a list of topics to a string in markdown format"""
 
-        text = "Popular topics 🗞\n"
+        text = "## Popular topics 🗞\n"
 
         for topic in topics:
             title_encoded = urllib.parse.quote(topic["title"])
@@ -28,6 +28,3 @@ class News:
             text += f"* [{topic['title']}]({url})\n"
 
         return text
-
-
-print(News().getPopularTopics())
