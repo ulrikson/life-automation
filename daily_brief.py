@@ -21,3 +21,5 @@ class DailyBrief:
                 "project_id": "",  # empty string for inbox
             }
         )
+
+        print("Daily brief created")
