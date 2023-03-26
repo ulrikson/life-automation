@@ -4,13 +4,17 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
 
-completion = openai.ChatCompletion.create(
-  model="gpt-3.5-turbo",
-  messages=[
-    {"role": "user", "content": "Hello!"}
-  ]
-)
-
-print(completion.choices[0].message)
+class ChatGPT:
+    def __init__(self):
+        self.api_key = os.getenv("OPENAI_API_KEY")
+        openai.api_key = self.api_key
+    
+    def chat(self, message):
+        completion = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "user", "content": message}
+            ]
+        )
+        return completion.choices[0].message
