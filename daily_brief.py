@@ -24,3 +24,6 @@ class DailyBrief:
         )
 
         print("Daily brief created")
+
+
+DailyBrief().create_brief()
