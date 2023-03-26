@@ -24,6 +24,18 @@ class Todoist:
 
         return response.json()
 
+    def get_completion_tasks(self):
+        """Get tasks from Todoist API that contain a question mark and has no description
+        See https://developer.todoist.com/rest/v2/#get-active-tasks
+        :return: json
+        """
+        params = {"filter": "#inbox & search:?"}
+
+        # filter out those with empty description
+        tasks = [task for task in self.get_tasks(params) if task["description"] == ""]
+
+        return tasks
+
     def create_task(self, data):
         """Create task in Todoist API
         See https://developer.todoist.com/rest/v2/#create-a-new-task
@@ -53,7 +65,7 @@ class Todoist:
 
     def get_headers(self):
         """Get headers for Todoist API"""
-        
+
         return {
             "Content-Type": "application/json",
             "X-Request-Id": str(uuid.uuid4()),
