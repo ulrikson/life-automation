@@ -24,13 +24,9 @@ class NewsAPI:
 
         return response.json()["topics"]
 
-
-class NewsMarkdownFormatter:
-    """Formats a list of news topics into markdown format."""
-
-    @staticmethod
-    def format(topics):
+    def get_topics_formatted(self):
         text = "## Popular topics 🗞\n"
+        topics = self.get_popular_topics()
 
         for i, topic in enumerate(topics, start=1):
             title_encoded = quote(topic["title"])
@@ -42,9 +38,6 @@ class NewsMarkdownFormatter:
 
 if __name__ == "__main__":
     api = NewsAPI()
-    topics = api.get_popular_topics()
-
-    formatter = NewsMarkdownFormatter()
-    text = formatter.format(topics)
+    text = api.get_topics_formatted()
 
     print(text)

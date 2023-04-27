@@ -1,7 +1,8 @@
 from todoist import Todoist
 from weather import Weather
-from news import NewsAPI, NewsMarkdownFormatter
+from news import NewsAPI
 from fantasy import Fantasy
+from stocks import StockPrice
 
 
 class DailyBrief:
@@ -13,8 +14,9 @@ class DailyBrief:
 
         todoist = Todoist()
         weather = Weather().get_forecast_text()
-        news = NewsMarkdownFormatter().format(NewsAPI().get_popular_topics())
-        text = f"{news}\n{weather}"
+        news = NewsAPI().get_topics_formatted()
+        omx = StockPrice("^OMX", 90).get_change_formatted()
+        text = f"{news}\n{weather}\n{omx}"
 
         todoist.create_task(
             {
