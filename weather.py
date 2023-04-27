@@ -13,7 +13,7 @@ class Weather:
         self.city = "Stockholm"
         self.params = {"key": os.getenv("WEATHER_API_KEY"), "q": self.city, "days": 3}
 
-    def getForecast(self):
+    def get_forecast(self):
         """Returns a list of dictionaries with the forecast for the next 3 days"""
 
         response = requests.get(self.url, headers={}, params=self.params).json()
@@ -39,11 +39,11 @@ class Weather:
 
         return forecasts
 
-    def getForecastText(self):
+    def get_forecast_text(self):
         """Returns a string with the forecast for the next 3 days in markdown format
         for example: * 2021-03-01: Partly cloudy, 3°C (1°C - 5°C)"""
 
-        forecasts = self.getForecast()
+        forecasts = self.get_forecast()
         text = "## Weather forecast 🌦\n"
         for forecast in forecasts:
             text += f"* {forecast['date']}: {forecast['text']}, {forecast['avg_temp']}°C ({forecast['min_temp']}°C - {forecast['max_temp']}°C)\n"

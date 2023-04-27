@@ -1,6 +1,6 @@
 from todoist import Todoist
 from weather import Weather
-from news import News
+from news import NewsAPI, NewsMarkdownFormatter
 from fantasy import Fantasy
 
 
@@ -12,8 +12,8 @@ class DailyBrief:
         """Create a daily brief in Todoist"""
 
         todoist = Todoist()
-        weather = Weather().getForecastText()
-        news = News().getPopularTopics()
+        weather = Weather().get_forecast_text()
+        news = NewsMarkdownFormatter().format(NewsAPI().get_popular_topics())
         text = f"{news}\n{weather}"
 
         todoist.create_task(
