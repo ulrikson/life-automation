@@ -10,6 +10,7 @@ load_dotenv()
 class Todoist:
     def __init__(self) -> None:
         self.inbox_project_id = 2309764563
+        self.home_project_id = 2309764566
         self.headers = self.get_headers()
 
     def get_tasks(self, params):
