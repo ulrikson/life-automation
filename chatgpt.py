@@ -6,7 +6,7 @@ load_dotenv()
 
 class ChatGPT:
     def __init__(self):
-        self.model = "gpt-3.5-turbo"
+        self.model = "gpt-4"
         self.api_key = os.getenv("OPENAI_API_KEY")
         openai.api_key = self.api_key
     
