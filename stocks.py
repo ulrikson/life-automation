@@ -3,14 +3,15 @@ import datetime
 
 
 class StockPrice:
-    def __init__(self, symbol, days_back):
+    def __init__(self, symbol):
         self.symbol = symbol
-        self.days_back = days_back
 
     def get_percent_change(self):
         # Define the start and end dates for the analysis
         end_date = datetime.datetime.now()
-        start_date = end_date - datetime.timedelta(days=self.days_back)
+
+        # Start date is beginning of the year
+        start_date = datetime.datetime(end_date.year, 1, 1)
 
         # Download the historical stock data
         stock_data = yf.download(
@@ -31,11 +32,11 @@ class StockPrice:
         change = self.get_percent_change()
         changeDirection = "up" if change > 0 else "down"
         text += (
-            f"{self.symbol} is {changeDirection} {change:.2f}% in the last {self.days_back} days"
+            f"{self.symbol} is {changeDirection} {change:.2f}% since the beginning of the year"
         )
         return text
 
 
 if __name__ == "__main__":
-    stock = StockPrice("^OMX", 90)
+    stock = StockPrice("^OMX")
     print(stock.get_change_formatted())

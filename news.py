@@ -7,7 +7,7 @@ class NewsAPI:
 
     BASE_URL = "https://omni-content.omni.news"
 
-    def __init__(self, offset=0, limit=10, sort="current"):
+    def __init__(self, offset=0, limit=5, sort="current"):
         self.offset = offset
         self.limit = limit
         self.sort = sort

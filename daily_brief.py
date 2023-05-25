@@ -15,7 +15,7 @@ class DailyBrief:
         todoist = Todoist()
         weather = Weather().get_forecast_text()
         news = NewsAPI().get_topics_formatted()
-        omx = StockPrice("^OMX", 90).get_change_formatted()
+        omx = StockPrice("^OMX").get_change_formatted()
         text = f"{news}\n{weather}\n{omx}"
 
         todoist.create_task(
