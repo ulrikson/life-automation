@@ -30,10 +30,20 @@ class Todoist:
         See https://developer.todoist.com/rest/v2/#get-active-tasks
         :return: json
         """
-        params = {"filter": "#inbox & search:?"}
+        params = {"filter": "#Inbox & search:?"}
 
-        # filter out those with empty description
-        tasks = [task for task in self.get_tasks(params) if task["description"] == ""]
+        # extra safety layer, the API should return only inbox tasks with a question mark, but it's wonky
+        tasks = []
+        for task in self.get_tasks(params):
+            # project is inbox
+            is_inbox = int(task["project_id"]) == int(self.inbox_project_id)
+            # description is empty
+            is_empty = task["description"] == ""
+            # question mark in content
+            is_question = "?" in task["content"]
+
+            if is_inbox and is_empty and is_question:
+                tasks.append(task)
 
         return tasks
 
@@ -72,3 +82,9 @@ class Todoist:
             "X-Request-Id": str(uuid.uuid4()),
             "Authorization": f"Bearer {os.getenv('TODOIST_TOKEN')}",
         }
+
+
+if __name__ == "__main__":
+    todoist = Todoist()
+    tasks = todoist.get_completion_tasks()
+    print(tasks)
