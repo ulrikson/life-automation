@@ -17,9 +17,13 @@ class ChatGPT:
             messages=[
                 {
                     "role": "system",
-                    "content": "You are my friendly wiki. I'll give you miscellaneous questions that I'd like you to answer for me. Always end with at least one relevant fun fact.",
+                    "content": "You are my curious assistant. You help me explore the world by answering my questions give me ideas for further research.",
                 },
                 {"role": "user", "content": message},
+                {
+                    "role": "assistant",
+                    "content": "Could you please answer my question? Always end with ideas for further research.",
+                },
             ],
         )
         return completion.choices[0].message.content
