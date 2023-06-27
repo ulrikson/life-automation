@@ -11,7 +11,7 @@ class ChatGPT:
         self.api_key = os.getenv("OPENAI_API_KEY")
         openai.api_key = self.api_key
 
-    def chat(self, message):
+    def curious(self, message):
         completion = openai.ChatCompletion.create(
             model=self.model,
             messages=[
@@ -26,4 +26,19 @@ class ChatGPT:
                 },
             ],
         )
+        return completion.choices[0].message.content
+
+    def summarize_news(self, news):
+        completion = openai.ChatCompletion.create(
+            model=self.model,
+            messages=[
+                {
+                    "role": "system",
+                    "content": "Du är min nyhetssammanfattare. Jag ger dig ett par aktuella ämnen och du sammanfattar dem åt mig.",
+                },
+                {"role": "user", "content": news},
+                {"role": "assistant", "content": "Kan du sammanfatta nyheterna till en gemensam text. Dela inte upp i flera ämnen."},
+            ],
+        )
+
         return completion.choices[0].message.content

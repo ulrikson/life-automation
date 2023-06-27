@@ -1,7 +1,6 @@
 from todoist import Todoist
 from weather import Weather
 from news import NewsAPI
-from fantasy import Fantasy
 from stocks import StockPrice
 
 
@@ -12,12 +11,12 @@ class DailyBrief:
     def create_brief(self):
         """Create a daily brief in Todoist"""
 
-        todoist = Todoist()
         weather = Weather().get_forecast_text()
-        news = NewsAPI().get_topics_formatted()
+        news = NewsAPI().get_news_text()
         omx = StockPrice("^OMX").get_change_formatted()
         text = f"{news}\n{weather}\n{omx}"
 
+        todoist = Todoist()
         todoist.create_task(
             {
                 "content": "Daily brief",
@@ -28,45 +27,9 @@ class DailyBrief:
             }
         )
 
+        todoist.create_deadline_tasks()
+
         print("Daily brief created")
-
-    def create_deadline_tasks(self):
-        """Create deadline tasks in Todoist for Premier League and Allsvenskan"""
-
-        self._create_deadline_task(
-            "Premier League",
-            "https://fantasy.premierleague.com/api/bootstrap-static/",
-            "FPL Deadline",
-        )
-
-        self._create_deadline_task(
-            "Allsvenskan",
-            "https://fantasy.allsvenskan.se/api/bootstrap-static/",
-            "FAL Deadline",
-        )
-
-    def _create_deadline_task(self, league_name, api_url, task_content):
-        """Create a deadline task in Todoist for a specific league
-        :param league_name: Name of the league
-        :param api_url: API URL for the league
-        :param task_content: Content of the task"""
-
-        league = Fantasy(api_url)
-
-        if league.is_deadline_today():
-            deadline = league.get_next_deadline()
-            todoist = Todoist()
-            todoist.create_task(
-                {
-                    "content": task_content,
-                    "due_string": deadline.strftime("%Y-%m-%d %H:%M"),
-                    "priority": 4,
-                    "project_id": todoist.home_project_id,
-                }
-            )
-
-            print(f"{league_name} deadline task created")
 
 
 DailyBrief().create_brief()
-DailyBrief().create_deadline_tasks()

@@ -1,5 +1,5 @@
 from todoist import Todoist
-from chatgpt import ChatGPT
+from openai_api import ChatGPT
 
 todoist = Todoist()
 chatgpt = ChatGPT()
@@ -12,7 +12,7 @@ for task in tasks:
     question = task["content"]
 
     # Get the answer from ChatGPT
-    answer = chatgpt.chat(question)
+    answer = chatgpt.curious(question)
 
     # Update the task with the answer
     todoist.update_task({"description": answer}, task["id"])
