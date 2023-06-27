@@ -22,7 +22,7 @@ class ChatGPT:
                 {"role": "user", "content": message},
                 {
                     "role": "assistant",
-                    "content": "Could you please answer my question? Always end with ideas for further research.",
+                    "content": "Could you please answer my question? Always end with one (1) idea for further research.",
                 },
             ],
         )
@@ -37,7 +37,7 @@ class ChatGPT:
                     "content": "Du är min nyhetssammanfattare. Jag ger dig ett par aktuella ämnen och du sammanfattar dem åt mig.",
                 },
                 {"role": "user", "content": news},
-                {"role": "assistant", "content": "Kan du sammanfatta nyheterna till en gemensam text. Dela inte upp i flera ämnen."},
+                {"role": "assistant", "content": "Kan du sammanfatta nyheterna till en gemensam text? Dela inte upp i flera ämnen."},
             ],
         )
 
