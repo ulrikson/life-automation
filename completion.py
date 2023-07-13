@@ -12,6 +12,7 @@ for task in tasks:
     question = task["content"]
 
     # If parent_id is a number, then fetch the parent task's description and add it as context
+    context = None
     if task["parent_id"]:
         parent_task = todoist.get_task(task["parent_id"])
         context = parent_task["description"]
