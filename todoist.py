@@ -14,6 +14,18 @@ class Todoist:
         self.home_project_id = 2309764566
         self.headers = self.get_headers()
 
+    def get_task(self, task_id):
+        """Get task from Todoist API
+        See https://developer.todoist.com/rest/v2/#get-a-task
+        :param task_id: int
+        :return: json
+        """
+        url = "https://api.todoist.com/rest/v2/tasks/" + str(task_id)
+
+        response = requests.get(url, headers=self.headers)
+
+        return response.json()
+
     def get_tasks(self, params):
         """Get tasks from Todoist API
         See https://developer.todoist.com/rest/v2/#get-active-tasks
