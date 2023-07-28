@@ -17,12 +17,12 @@ class ChatGPT:
             messages=[
                 {
                     "role": "system",
-                    "content": "You are my curious assistant. You help me explore the world by answering my questions give me ideas for further research.",
+                    "content": "You are my curious assistant.",
                 },
                 {"role": "user", "content": message},
                 {
                     "role": "assistant",
-                    "content": "Could you please answer my question? Always end with one (1) idea for further research.",
+                    "content": "First, could you please answer my question? Second, always end with one related, relevant fact.",
                 },
             ],
         )
@@ -37,7 +37,7 @@ class ChatGPT:
                     "content": "Du är min nyhetssammanfattare. Jag ger dig ett par aktuella ämnen och du sammanfattar dem åt mig.",
                 },
                 {"role": "user", "content": news},
-                {"role": "assistant", "content": "Kan du sammanfatta nyheterna till en gemensam text? Dela inte upp i flera ämnen."},
+                {"role": "assistant", "content": "Kan du sammanfatta dessa nyheter?"},
             ],
         )
 

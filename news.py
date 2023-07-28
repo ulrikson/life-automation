@@ -8,10 +8,11 @@ class NewsAPI:
 
     BASE_URL = "https://omni-content.omni.news"
 
-    def __init__(self, offset=0, limit=5, sort="current"):
+    def __init__(self, offset=0, limit=5, sort="current", articles_per_topic=2):
         self.offset = offset
         self.limit = limit
         self.sort = sort
+        self.articles_per_topic = articles_per_topic
         self.session = requests.Session()
 
     def get_popular_topics(self):
@@ -38,6 +39,7 @@ class NewsAPI:
 
         for i, topic in enumerate(topics, start=1):
             title_encoded = quote(topic["title"])
+            print(title_encoded)
             url = f"https://content.omni.se/search?query={title_encoded}&offset={self.offset}&limit={self.limit}&feature_flag=mer"
             response = self.session.get(url)
 
@@ -50,17 +52,19 @@ class NewsAPI:
 
     def _get_article_text(self, articles):
         text = ""
-        for article in articles:
+        # for article in articles, as long as its less than articles_per_topic
+        for article in articles[: self.articles_per_topic]:
             for resource in article["resources"]:
                 if resource["type"] == "Text":
                     for paragraph in resource["paragraphs"]:
-                        text += paragraph["text"]["value"]
+                        # add text, but only until when the word "Omni" is found
+                        text += paragraph["text"]["value"].split("Omni")[0]
 
         return text
 
 
 if __name__ == "__main__":
     api = NewsAPI()
-    text = api.get_news_text()
+    text = api.get_topics_text()
 
     print(text)
