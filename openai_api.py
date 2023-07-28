@@ -8,7 +8,7 @@ load_dotenv()
 class ChatGPT:
     def __init__(self):
         """Initializes the ChatGPT model and loads the OPENAI_API_KEY."""
-        self.model = "gpt-4"
+        self.model = "gpt-3.5-turbo-16k"
         self.api_key = os.getenv("OPENAI_API_KEY")
         if not self.api_key:
             raise ValueError("Missing OPENAI_API_KEY environment variable")

@@ -9,11 +9,10 @@ class NewsAPI:
 
     BASE_URL = "https://omni-content.omni.news"
 
-    def __init__(self, offset=0, limit=5, sort="current", articles_per_topic=3):
+    def __init__(self, offset=0, limit=5, sort="current"):
         self.offset = offset
         self.limit = limit
         self.sort = sort
-        self.articles_per_topic = articles_per_topic
         self.session = requests.Session()
 
     def get_popular_topics(self):
@@ -55,7 +54,7 @@ class NewsAPI:
     def _get_article_text(self, articles):
         text = ""
         # for article in articles, as long as its less than articles_per_topic
-        for article in articles[: self.articles_per_topic]:
+        for article in articles:
             for resource in article["resources"]:
                 if resource["type"] == "Text":
                     for paragraph in resource["paragraphs"]:
