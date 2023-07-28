@@ -32,8 +32,15 @@ class ChatGPT:
         ]
 
         if context:
-            messages.append({"role": "user", "content": f"You've previously told me: {context}"})
-            messages.append({"role": "user", "content": f"I want to follow up on that by asking: {message}"})
+            messages.append(
+                {"role": "user", "content": f"You've previously told me: {context}"}
+            )
+            messages.append(
+                {
+                    "role": "user",
+                    "content": f"I want to follow up on that by asking: {message}",
+                }
+            )
         else:
             messages.append({"role": "user", "content": message})
 
@@ -52,7 +59,7 @@ class ChatGPT:
             messages=[
                 {
                     "role": "system",
-                    "content": "Du är min nyhetssammanfattare. Jag ger dig ett par aktuella ämnen och du sammanfattar dem åt mig.",
+                    "content": "Du är min nyhetssammanfattare. Varje morgon ger jag dig ett par aktuella ämnen och du sammanfattar dem åt mig. Målet är att jag ska få en så bra överblick som möjligt över vad som händer i världen just nu.",
                 },
                 {"role": "user", "content": news},
                 {"role": "assistant", "content": "Kan du sammanfatta dessa nyheter?"},
@@ -64,4 +71,4 @@ class ChatGPT:
 
 if __name__ == "__main__":
     chatgpt = ChatGPT()
-    print(chatgpt.curious("How are you?", "I'm not fine."))
+    print(chatgpt.curious("Vad är en hund?"))

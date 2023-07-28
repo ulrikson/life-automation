@@ -1,6 +1,7 @@
 import requests
 from urllib.parse import quote
 from openai_api import ChatGPT
+from helpers import TextHelper
 
 
 class NewsAPI:
@@ -8,7 +9,7 @@ class NewsAPI:
 
     BASE_URL = "https://omni-content.omni.news"
 
-    def __init__(self, offset=0, limit=5, sort="current", articles_per_topic=2):
+    def __init__(self, offset=0, limit=5, sort="current", articles_per_topic=3):
         self.offset = offset
         self.limit = limit
         self.sort = sort
@@ -39,14 +40,15 @@ class NewsAPI:
 
         for i, topic in enumerate(topics, start=1):
             title_encoded = quote(topic["title"])
-            print(title_encoded)
             url = f"https://content.omni.se/search?query={title_encoded}&offset={self.offset}&limit={self.limit}&feature_flag=mer"
             response = self.session.get(url)
 
             if response.status_code != 200:
                 response.raise_for_status()
 
-            text += f"Ämne {i}: {self._get_article_text(response.json()['articles'])} \n\n"
+            text += (
+                f"Ämne {i}: {self._get_article_text(response.json()['articles'])} \n\n"
+            )
 
         return text
 
@@ -58,13 +60,15 @@ class NewsAPI:
                 if resource["type"] == "Text":
                     for paragraph in resource["paragraphs"]:
                         # add text, but only until when the word "Omni" is found
-                        text += paragraph["text"]["value"].split("Omni")[0]
+                        raw_text = paragraph["text"]["value"].split("Omni")[0]
+                        clean_text = TextHelper(raw_text).clean_and_lemmatize_text()
+                        text += f"{clean_text} "
 
         return text
 
 
 if __name__ == "__main__":
     api = NewsAPI()
-    text = api.get_topics_text()
+    text = api.get_news_text()
 
     print(text)
