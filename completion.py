@@ -2,7 +2,7 @@ from todoist import Todoist
 from openai_api import ChatGPT
 
 todoist = Todoist()
-chatgpt = ChatGPT()
+chatgpt = ChatGPT(model="gpt-3.5-turbo")
 
 # Get tasks from Todoist API that contain a question mark
 tasks = todoist.get_completion_tasks()
