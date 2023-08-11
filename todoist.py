@@ -99,23 +99,26 @@ class Todoist:
     def create_deadline_tasks(self):
         """Create deadline tasks in Todoist for Premier League and Allsvenskan"""
 
-        self._create_deadline_task(
+        self._create_league_task(
             "Premier League",
             "https://fantasy.premierleague.com/api/bootstrap-static/",
             "FPL Deadline",
+            "https://fantasy.premierleague.com/the-scout/"
         )
 
-        self._create_deadline_task(
+        self._create_league_task(
             "Allsvenskan",
             "https://fantasy.allsvenskan.se/api/bootstrap-static/",
             "FAL Deadline",
+            "https://www.fotbollskanalen.se/allsvenskan/?tab=nyheter"
         )
 
-    def _create_deadline_task(self, league_name, api_url, task_content):
+    def _create_league_task(self, league_name, api_url, title, description):
         """Create a deadline task in Todoist for a specific league
         :param league_name: Name of the league
         :param api_url: API URL for the league
-        :param task_content: Content of the task"""
+        :param title: Content of the task
+        :param description: Description of the task"""
 
         league = Fantasy(api_url)
 
@@ -124,7 +127,8 @@ class Todoist:
             todoist = Todoist()
             todoist.create_task(
                 {
-                    "content": task_content,
+                    "content": title,
+                    "description": description,
                     "due_string": deadline.strftime("%Y-%m-%d %H:%M"),
                     "priority": 4,
                     "project_id": todoist.home_project_id,
