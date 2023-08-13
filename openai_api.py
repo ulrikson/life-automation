@@ -14,42 +14,31 @@ class ChatGPT:
             raise ValueError("Missing OPENAI_API_KEY environment variable")
         openai.api_key = self.api_key
 
-    def curious(self, message, context=None):
+    def curious(self, message):
         """Generates a completion using the curious assistant mode."""
         completion = openai.ChatCompletion.create(
             model=self.model,
-            messages=self._get_curious_messages(message, context),
+            messages=self._get_curious_messages(message),
         )
         return completion.choices[0].message.content
 
-    def _get_curious_messages(self, message, context=None):
+    def _get_curious_messages(self, message):
         """Constructs the messages for the curious assistant mode."""
         messages = [
             {
                 "role": "system",
-                "content": "You are my curious assistant.",
+                "content": "You are my research assistant. I'll give you some questions and I want you to point me to what keywords to search on Wikipedia to answer the questions.",
             },
         ]
 
-        if context:
-            messages.append(
-                {"role": "user", "content": f"You've previously told me: {context}"}
-            )
-            messages.append(
-                {
-                    "role": "user",
-                    "content": f"I want to follow up on that by asking: {message}",
-                }
-            )
-        else:
-            messages.append({"role": "user", "content": message})
-
+        messages.append({"role": "user", "content": message})
         messages.append(
             {
                 "role": "assistant",
-                "content": "First, could you please answer my question? Second, always end with one (1) relevant idea or fact.",
+                "content": "Briefly answer the question and then tell me what keywords to search on Wikipedia to answer the question.",
             },
         )
+
         return messages
 
     def summarize_news(self, news):
