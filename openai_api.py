@@ -27,7 +27,7 @@ class ChatGPT:
         messages = [
             {
                 "role": "system",
-                "content": "You are my research assistant. I'll give you some questions and I want you to point me to what keywords to search on Wikipedia to answer the questions.",
+                "content": "You are my research assistant. I'll give you some questions that I want you to answer. Also, if there's a relevant book to read, recommend it.",
             },
         ]
 
@@ -35,7 +35,7 @@ class ChatGPT:
         messages.append(
             {
                 "role": "assistant",
-                "content": "Briefly answer the question and then tell me what keywords to search on Wikipedia to answer the question.",
+                "content": "Briefly answer the question.",
             },
         )
 
@@ -51,7 +51,7 @@ class ChatGPT:
                     "content": "Du är min nyhetssammanfattare. Varje morgon ger jag dig ett par aktuella ämnen och du sammanfattar dem åt mig. Målet är att jag ska få en så bra överblick som möjligt över vad som händer i världen just nu.",
                 },
                 {"role": "user", "content": news},
-                {"role": "assistant", "content": "Kan du sammanfatta dessa nyheter?"},
+                {"role": "assistant", "content": "Sammanfatta dessa nyheter."},
             ],
         )
 
